@@ -1,0 +1,108 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - My Profile{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body py-4">
+                {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"
+                     class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid var(--border-color);">
+                {% else %}
+                <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                     style="width: 120px; height: 120px; background: rgba(59, 130, 246, 0.15); border: 3px solid var(--border-color);">
+                    <i class="fas fa-user fa-3x" style="color: var(--accent);"></i>
+                </div>
+                {% endif %}
+                <h4 class="mb-1">{{ user.first_name }} {{ user.last_name }}</h4>
+                <p style="color: var(--text-secondary);">@{{ user.username }}</p>
+                <a href="/profile/edit/" class="btn btn-primary btn-sm mt-2">
+                    <i class="fas fa-edit me-1"></i>Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2" style="color: var(--accent);"></i>Profile Information
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-4" style="color: var(--text-secondary);">Email</div>
+                    <div class="col-sm-8">{{ user.email|default:"Not set" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4" style="color: var(--text-secondary);">Phone</div>
+                    <div class="col-sm-8">{{ profile.phone|default:"Not set" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4" style="color: var(--text-secondary);">Address</div>
+                    <div class="col-sm-8">{{ profile.address|default:"Not set" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4" style="color: var(--text-secondary);">National ID</div>
+                    <div class="col-sm-8">{{ profile.national_id|default:"Not set" }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-4" style="color: var(--text-secondary);">Member Since</div>
+                    <div class="col-sm-8">{{ user.date_joined|date:"M d, Y" }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio section - VULNERABILITY: Stored XSS via |safe -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-pen-fancy me-2" style="color: var(--warning);"></i>About Me
+            </div>
+            <div class="card-body">
+                {% if profile.bio %}
+                <!-- VULNERABLE: Bio rendered without escaping -->
+                <div class="bio-content">{{ profile.bio|safe }}</div>
+                {% else %}
+                <p style="color: var(--text-secondary);">No bio added yet. <a href="/profile/edit/">Add one now</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Linked Accounts -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-credit-card me-2" style="color: var(--success);"></i>Linked Accounts
+            </div>
+            <div class="card-body p-0">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th class="text-end">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in accounts %}
+                        <tr>
+                            <td><code style="color: var(--accent);">{{ account.account_number }}</code></td>
+                            <td>{{ account.get_account_type_display }}</td>
+                            <td>
+                                {% if account.is_active %}
+                                <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">Active</span>
+                                {% else %}
+                                <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end txn-amount-positive">${{ account.balance|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

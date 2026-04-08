@@ -1,0 +1,106 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Documents{% endblock %}
+{% block page_title %}Document Viewer{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-folder-open me-2" style="color: var(--accent);"></i>View Document
+            </div>
+            <div class="card-body">
+                <form method="GET" action="/documents/view/" id="doc-viewer-form">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">File Path</label>
+                        <input type="text" class="form-control" id="file" name="file"
+                               placeholder="e.g., terms_of_service.txt" value="{{ file_param }}">
+                        <small style="color: var(--text-secondary);">Enter the filename to view.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="view-doc-btn">
+                        <i class="fas fa-eye me-2"></i>View File
+                    </button>
+                </form>
+
+                <hr style="border-color: var(--border-color);">
+
+                <h6 style="color: var(--text-secondary);">Available Documents</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a href="/documents/view/?file=terms_of_service.txt" style="color: var(--accent); text-decoration: none;">
+                            <i class="fas fa-file-alt me-2"></i>terms_of_service.txt
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/documents/view/?file=privacy_policy.txt" style="color: var(--accent); text-decoration: none;">
+                            <i class="fas fa-file-alt me-2"></i>privacy_policy.txt
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/documents/view/?file=account_agreement.txt" style="color: var(--accent); text-decoration: none;">
+                            <i class="fas fa-file-alt me-2"></i>account_agreement.txt
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- User Uploaded Documents -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <i class="fas fa-cloud me-2" style="color: var(--success);"></i>My Uploads
+            </div>
+            <div class="card-body p-0">
+                {% for doc in documents %}
+                <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-color);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-file me-2" style="color: var(--accent);"></i>
+                            <span>{{ doc.title }}</span>
+                        </div>
+                        <small style="color: var(--text-secondary);">{{ doc.uploaded_at|date:"M d" }}</small>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-3" style="color: var(--text-secondary);">
+                    No documents uploaded. <a href="/documents/upload/">Upload one</a>.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        {% if error %}
+        <div class="alert alert-danger" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5;">
+            <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+        </div>
+        {% endif %}
+
+        {% if content %}
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-file-code me-2" style="color: var(--warning);"></i>File Content: {{ file_param }}
+            </div>
+            <div class="card-body">
+                <pre style="background: #0d1117; color: #c9d1d9; padding: 1.5rem; border-radius: 8px; overflow-x: auto; max-height: 600px; margin: 0;">{{ content }}</pre>
+            </div>
+        </div>
+        {% elif not error and file_param %}
+        <div class="card">
+            <div class="card-body text-center py-5" style="color: var(--text-secondary);">
+                <i class="fas fa-file-excel fa-3x mb-3 d-block"></i>
+                No content to display.
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-body text-center py-5" style="color: var(--text-secondary);">
+                <i class="fas fa-file-alt fa-3x mb-3 d-block"></i>
+                <p>Select a document or enter a file path to view its contents.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

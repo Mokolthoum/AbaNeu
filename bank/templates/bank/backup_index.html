@@ -1,0 +1,43 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Backup{% endblock %}
+{% block page_title %}Backup Directory{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-database me-2" style="color: var(--warning);"></i>Backup Files
+    </div>
+    <div class="card-body">
+        <div class="alert" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Warning:</strong> This backup directory should not be publicly accessible.
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><i class="fas fa-file-code me-2" style="color: var(--accent);"></i>db_backup.json</td>
+                    <td>4.2 KB</td>
+                    <td>Mar 08, 2026</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-file me-2" style="color: var(--accent);"></i>settings_backup.py</td>
+                    <td>2.1 KB</td>
+                    <td>Mar 05, 2026</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-file-archive me-2" style="color: var(--accent);"></i>full_backup_20260301.tar.gz</td>
+                    <td>15.7 MB</td>
+                    <td>Mar 01, 2026</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

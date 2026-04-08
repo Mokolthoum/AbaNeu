@@ -1,0 +1,32 @@
+VULNBANK PRIVACY POLICY
+=======================
+Last Updated: March 1, 2026
+
+1. INFORMATION WE COLLECT
+- Personal identification: Full name, date of birth, national ID
+- Contact information: Email address, phone number, mailing address
+- Financial data: Account numbers, transaction history, balance information
+- Technical data: IP address, browser type, login timestamps
+
+2. HOW WE USE YOUR INFORMATION
+- To provide and maintain banking services
+- To process transactions and send transaction confirmations
+- To detect and prevent fraud
+- To comply with legal obligations
+
+3. DATA STORAGE
+- All data is stored on secure servers located in the United States
+- Database: SQLite (development) / PostgreSQL (production)
+- Encryption: Data at rest uses AES-256 encryption
+- Backups are performed daily and stored in /backup/ directory
+
+4. DATA RETENTION
+- Account data: Retained for 7 years after account closure
+- Transaction records: Retained for 10 years
+- Support tickets: Retained for 3 years
+
+5. YOUR RIGHTS
+- Right to access your personal data
+- Right to correct inaccurate data
+- Right to request data deletion
+- Right to data portability

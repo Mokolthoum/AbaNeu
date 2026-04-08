@@ -1,0 +1,51 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Edit Profile{% endblock %}
+{% block page_title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-user-edit me-2" style="color: var(--accent);"></i>Edit Profile
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="/profile/edit/" enctype="multipart/form-data" id="edit-profile-form">
+                    <div class="mb-3">
+                        <label for="bio" class="form-label">Bio / About Me</label>
+                        <textarea class="form-control" id="bio" name="bio" rows="4"
+                                  placeholder="Write something about yourself... (HTML is allowed)">{{ profile.bio }}</textarea>
+                        <small style="color: var(--text-secondary);">You can use HTML formatting in your bio.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" name="phone"
+                               value="{{ profile.phone }}" placeholder="+1 (555) 123-4567">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="2"
+                                  placeholder="Your address...">{{ profile.address }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="national_id" class="form-label">National ID</label>
+                        <input type="text" class="form-control" id="national_id" name="national_id"
+                               value="{{ profile.national_id }}" placeholder="National ID number">
+                    </div>
+                    <div class="mb-4">
+                        <label for="profile_picture" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                        <small style="color: var(--text-secondary);">Upload any image file for your profile picture.</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary" id="save-profile-btn">
+                            <i class="fas fa-save me-2"></i>Save Changes
+                        </button>
+                        <a href="/profile/" class="btn btn-outline-light">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

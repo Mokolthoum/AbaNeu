@@ -1,0 +1,159 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Stats Row -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-label">Total Balance</div>
+                    <div class="stat-value" style="color: var(--success);">${{ total_balance|floatformat:2 }}</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">
+                    <i class="fas fa-wallet"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-label">Active Accounts</div>
+                    <div class="stat-value">{{ accounts|length }}</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15); color: var(--accent);">
+                    <i class="fas fa-university"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card">
+            <div class="d-flex align-items-start justify-content-between">
+                <div>
+                    <div class="stat-label">Recent Transactions</div>
+                    <div class="stat-value">{{ transactions|length }}</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-bolt me-2" style="color: var(--warning);"></i>Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-6">
+                        <a href="/transfer/" class="btn btn-outline-light w-100 py-3" style="border-color: var(--border-color);">
+                            <i class="fas fa-paper-plane d-block mb-1" style="color: var(--accent);"></i>
+                            <small>Transfer</small>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="/search/" class="btn btn-outline-light w-100 py-3" style="border-color: var(--border-color);">
+                            <i class="fas fa-search d-block mb-1" style="color: var(--success);"></i>
+                            <small>Search</small>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="/documents/upload/" class="btn btn-outline-light w-100 py-3" style="border-color: var(--border-color);">
+                            <i class="fas fa-upload d-block mb-1" style="color: var(--warning);"></i>
+                            <small>Upload Doc</small>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="/support/" class="btn btn-outline-light w-100 py-3" style="border-color: var(--border-color);">
+                            <i class="fas fa-headset d-block mb-1" style="color: var(--danger);"></i>
+                            <small>Support</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-credit-card me-2" style="color: var(--accent);"></i>My Accounts
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-borderless mb-0">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Type</th>
+                            <th class="text-end">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for account in accounts %}
+                        <tr>
+                            <td><code style="color: var(--accent);">{{ account.account_number }}</code></td>
+                            <td><span class="badge" style="background: rgba(59, 130, 246, 0.15); color: var(--accent);">{{ account.get_account_type_display }}</span></td>
+                            <td class="text-end txn-amount-positive">${{ account.balance|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" class="text-center" style="color: var(--text-secondary);">No accounts found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="fas fa-history me-2" style="color: var(--accent);"></i>Recent Transactions</span>
+        <a href="/search/" class="btn btn-sm btn-outline-light" style="font-size: 0.8rem;">View All</a>
+    </div>
+    <div class="card-body p-0">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Description</th>
+                    <th class="text-end">Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for txn in transactions %}
+                <tr>
+                    <td><code style="color: var(--text-secondary);">{{ txn.reference_number|truncatechars:15 }}</code></td>
+                    <td>{{ txn.sender_account.account_number }}</td>
+                    <td>{{ txn.receiver_account.account_number }}</td>
+                    <td>{{ txn.description|truncatechars:30 }}</td>
+                    <td class="text-end">
+                        {% if txn.sender_account.user == user %}
+                        <span class="txn-amount-negative">-${{ txn.amount|floatformat:2 }}</span>
+                        {% else %}
+                        <span class="txn-amount-positive">+${{ txn.amount|floatformat:2 }}</span>
+                        {% endif %}
+                    </td>
+                    <td style="color: var(--text-secondary); font-size: 0.85rem;">{{ txn.timestamp|date:"M d, Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center py-4" style="color: var(--text-secondary);">No transactions yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

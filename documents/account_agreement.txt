@@ -1,0 +1,31 @@
+VULNBANK ACCOUNT AGREEMENT
+==========================
+Last Updated: March 1, 2026
+
+ACCOUNT HOLDER AGREEMENT
+
+This agreement is between VulnBank Digital Banking ("the Bank") and the
+account holder ("the Customer").
+
+1. ACCOUNT TYPES
+   a) Savings Account - 2.5% APY, minimum balance $100
+   b) Checking Account - No minimum balance, unlimited transactions
+   c) Business Account - 1.8% APY, enhanced transaction limits
+
+2. FEES
+   - Monthly maintenance: $0 (Savings), $0 (Checking), $25 (Business)
+   - Wire transfer: $15 domestic, $45 international
+   - Overdraft: $35 per occurrence
+   - ATM (out-of-network): $3 per transaction
+
+3. SECURITY PROCEDURES
+   - Two-factor authentication available (not enforced)
+   - Session timeout: 60 minutes of inactivity
+   - Login attempts limited to 5 before lockout
+
+4. INTERNAL NOTES (CONFIDENTIAL)
+   - Admin credentials stored in .env file
+   - API endpoints: /api/v1/internal/*
+   - Debug mode enabled on development server
+   - Backup schedule: Daily at 02:30 UTC
+   - Log files: /dev_logs/debug.log

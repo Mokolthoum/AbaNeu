@@ -1,0 +1,69 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Customer Support{% endblock %}
+{% block page_title %}Customer Support{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-paper-plane me-2" style="color: var(--accent);"></i>Submit a Ticket
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="/support/" id="support-form">
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject"
+                               placeholder="Describe your issue briefly" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5"
+                                  placeholder="Describe your issue in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="submit-ticket-btn">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Ticket
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-ticket-alt me-2" style="color: var(--warning);"></i>My Tickets
+            </div>
+            <div class="card-body p-0">
+                {% for ticket in tickets %}
+                <div style="padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color);">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <!-- VULNERABILITY: Stored XSS - subject rendered with |safe -->
+                        <h6 class="mb-0">{{ ticket.subject|safe }}</h6>
+                        <span class="badge {% if ticket.status == 'open' %}bg-warning{% elif ticket.status == 'in_progress' %}bg-info{% else %}bg-success{% endif %}">
+                            {{ ticket.get_status_display }}
+                        </span>
+                    </div>
+                    <!-- VULNERABILITY: Stored XSS - message rendered with |safe -->
+                    <div class="mb-2" style="color: var(--text-secondary); font-size: 0.9rem;">{{ ticket.message|safe }}</div>
+                    <small style="color: var(--text-secondary);">
+                        <i class="fas fa-clock me-1"></i>{{ ticket.created_at|date:"M d, Y H:i" }}
+                    </small>
+                    {% if ticket.response %}
+                    <div class="mt-2 p-2" style="background: rgba(59, 130, 246, 0.1); border-radius: 8px; font-size: 0.9rem;">
+                        <strong style="color: var(--accent);"><i class="fas fa-reply me-1"></i>Support Response:</strong><br>
+                        {{ ticket.response|safe }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <div class="text-center py-4" style="color: var(--text-secondary);">
+                    <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                    No support tickets yet.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

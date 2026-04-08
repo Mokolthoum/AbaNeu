@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /backup/
+Disallow: /dev_logs/
+Disallow: /api/v1/internal/
+Disallow: /admin-panel/
+Disallow: /admin/
+Disallow: /documents/
+Disallow: /media/
+Disallow: /.env.example
+Disallow: /database_schema.sql
+Sitemap: http://localhost:8000/sitemap.xml

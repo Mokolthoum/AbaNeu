@@ -1,0 +1,47 @@
+{% extends "bank/base.html" %}
+{% block title %}VulnBank - Admin Panel{% endblock %}
+{% block page_title %}Admin Panel{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-cog me-2" style="color: var(--danger);"></i>Administration Panel
+    </div>
+    <div class="card-body">
+        <div class="alert" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5;">
+            <i class="fas fa-lock me-2"></i>
+            <strong>Restricted Area:</strong> This panel should require admin authentication.
+        </div>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value" style="color: var(--accent);">—</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-label">Total Accounts</div>
+                    <div class="stat-value" style="color: var(--success);">—</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-label">Total Transactions</div>
+                    <div class="stat-value" style="color: var(--warning);">—</div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <h6>Quick Links</h6>
+            <ul style="color: var(--text-secondary);">
+                <li><a href="/api/v1/internal/users/" style="color: var(--accent);">API - User List</a></li>
+                <li><a href="/api/v1/internal/accounts/" style="color: var(--accent);">API - Account List</a></li>
+                <li><a href="/api/v1/internal/transactions/" style="color: var(--accent);">API - Transaction List</a></li>
+                <li><a href="/backup/" style="color: var(--accent);">Backup Directory</a></li>
+                <li><a href="/dev_logs/" style="color: var(--accent);">Development Logs</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
