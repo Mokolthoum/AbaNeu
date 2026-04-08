@@ -1,49 +1,48 @@
-
 # 🏦 VulnBank (AbaNeu)
 
 <div align="center">
-  <h3>تطبيق بنكي غير آمن (Vulnerable Web Application)</h3>
-  <p>مخصص لأغراض التدريب على أمن المعلومات واختبارات الاختراق.</p>
+  <h3>Intentionally Vulnerable Web Application</h3>
+  <p>Dedicated for cybersecurity training, penetration testing, and vulnerability scanner testing.</p>
 </div>
 
 ---
 
-## 🌟 نظرة عامة (Overview)
-تطبيق **VulnBank** هو محاكاة لنظام بنكي تم تصميمه خصيصاً بحيث يحتوي على ثغرات أمنية شائعة (OWASP Top 10) ليتمكن متعلمي أمن المعلومات ومطوري الأدوات الأمنية من اختباره وتحسين مهاراتهم في بيئة آمنة وقانونية.
+## 🌟 Overview
+**VulnBank** is a simulated banking system designed to contain standard, real-world vulnerabilities (OWASP Top 10). It serves as a safe and legal environment for cybersecurity learners and security tool developers to test their tools and improve their skills.
 
-## 🛡️ الثغرات الموجودة (Vulnerabilities Included)
+## 🛡️ Included Vulnerabilities
 - SQL Injection (SQLi)
 - Cross-Site Scripting (XSS)
 - Broken Access Control (Insecure Direct Object References - IDOR)
 - Local File Inclusion (LFI)
-- Weak Authentication / Session Management
+- Weak Authentication & Session Management
 
-## ⚙️ المتطلبات وطريقة التثبيت (Installation)
-يعتمد التطبيق على إطار عمل `Django` بلغة بايثون.
+## ⚙️ Installation & Requirements
+The application is built using standard Python and the `Django` web framework.
 
-### 1- تنصيب المكتبات
+### 1. Install Dependencies
 ```bash
 git clone https://github.com/Mokolthoum/AbaNeu.git
 cd AbaNeu
 pip install -r requirements.txt
 ```
 
-### 2- إعداد قواعد البيانات (Migrations)
+### 2. Database Setup (Migrations)
 ```bash
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
 
-### 3- عمل حساب مدير (Superuser)
+### 3. Create Admin Account (Superuser)
 ```bash
 python3 manage.py createsuperuser
 ```
 
-### 4- تشغيل السيرفر (Run Server)
+### 4. Run the Local Server
 ```bash
 python3 manage.py runserver 0.0.0.0:8000
 ```
-الآن يمكنك زيارة `http://127.0.0.1:8000/` والبدء بعملية الفحص عن طريق الأدوات مثل `0x7v11co`!
+You can now access `http://127.0.0.1:8000/` and begin testing the application using tools like `0x7v11co`!
 
 ---
-**⚠️ تحذير**: لا تقم برفع هذا الموقع على خادم إنتاج (Production Server) مفتوح للعامة إطلاقاً، لأنه غير آمن عمدًا!
+**⚠️ WARNING**: NEVER deploy this application on a public-facing production server. It is intentionally vulnerable and extremely insecure!
