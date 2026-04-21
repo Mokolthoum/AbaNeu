@@ -1,4 +1,4 @@
-# 🏦 VulnBank (AbaNeu)
+# 🏦 VulnBank
 
 <div align="center">
   <h3>Intentionally Vulnerable Web Application for Security Training</h3>
@@ -8,7 +8,7 @@
 ---
 
 ## 🌟 Overview
-**VulnBank** (formerly AbaNeu) is a simulated modern banking system that has been intentionally developed with weak security controls and vulnerable code. It provides a legal and completely safe environment to practice web exploitation techniques, test automated security scanners (like `0x7v11co`), and understand secure coding practices by finding and fixing real-world vulnerabilities.
+**VulnBank** is a simulated modern banking system that has been intentionally developed with weak security controls and vulnerable code. It provides a legal and completely safe environment to practice web exploitation techniques, test automated security scanners (like `AXON`), and understand secure coding practices by finding and fixing real-world vulnerabilities.
 
 ## 🎯 Intended Audience
 - **Bug Bounty Hunters & Pentesters:** Hone your skills on realistic exploitation chains.
@@ -39,8 +39,8 @@ VulnBank is built using **Python 3** and **Django**. It is designed to be easily
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/Mokolthoum/AbaNeu.git
-cd AbaNeu
+git clone https://github.com/Mokolthoum/VulnBank.git
+cd VulnBank
 ```
 
 ### 2️⃣ Set Up Virtual Environment (Recommended)
@@ -78,7 +78,7 @@ python3 manage.py runserver 0.0.0.0:8000
 ## 🛠️ Project Architecture
 
 ```text
-AbaNeu/                     # Root Directory
+VulnBank/                   # Root Directory
 ├── vulnbank/               # Main Django project settings (misconfigured)
 ├── bank/                   # The primary application logic
 │   ├── views.py            # Contains the vulnerable logic (SQLi, IDOR)
